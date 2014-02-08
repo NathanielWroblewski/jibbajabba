@@ -1,5 +1,5 @@
-require "jibbajabba/version"
-
-module Jibbajabba
-  # Your code goes here...
-end
+require 'jibbajabba/version'
+require 'jibbajabba/hip_chat'
+require 'jibbajabba/room'
+require 'open-uri'
+require 'json'

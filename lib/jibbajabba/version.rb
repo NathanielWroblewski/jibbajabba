@@ -1,3 +1,3 @@
-module Jibbajabba
+module JibbaJabba
   VERSION = "0.0.1"
 end
