@@ -66,6 +66,8 @@ Methods:
 HipChat::Room.all # => all rooms for the user, default limit of 100, default start index of 0
 HipChat::Room.all.limit(10) # => change the default limit
 HipChat::Room.all.offset(25) # => change the start index
+
+HipChat::Room.create(name: 'Boom Pop', owner_user_id: 'me@email.com', privacy: 'public', guest_access: false )
 ```
 
 ## Contributing
