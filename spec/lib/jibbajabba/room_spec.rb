@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'pry'
 
 describe HipChat::Room do
   before :each do
@@ -91,6 +92,30 @@ describe HipChat::Room do
           e.message
         end
       ).to eq 'No API key assigned.'
+    end
+  end
+end
+
+describe HipChat::Room do
+  describe '.create' do
+    let(:api_key)      { SecureRandom.hex }
+    let(:api_response) { { 'boom' => 'pop' } }
+
+    it 'creates a new room' do
+      HipChat.api_key = api_key
+      HTTParty.stub(:post).and_return(api_response)
+
+      response = HipChat::Room.create(name: 'Boom Pop')
+
+      expect(HTTParty).to have_received(:post).with(
+        'https://api.hipchat.com/v2/room',
+        body: {name: 'Boom+Pop'}.to_json,
+        headers: {
+          'Content-Type' => 'application/json',
+          'Authorization' => "Bearer #{api_key}"
+        }
+      )
+      expect(response).to eq({'boom' => 'pop'})
     end
   end
 end
