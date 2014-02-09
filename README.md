@@ -67,7 +67,8 @@ HipChat::Room.all # => all rooms for the user, default limit of 100, default sta
 HipChat::Room.all.limit(10) # => change the default limit
 HipChat::Room.all.offset(25) # => change the start index
 
-HipChat::Room.create(name: 'Boom Pop', owner_user_id: 'me@email.com', privacy: 'public', guest_access: false )
+room = HipChat::Room.create(name: 'Boom Pop', owner_user_id: 'me@email.com', privacy: 'public', guest_access: false )
+room.update_attributes(name: 'Jibba', is_archived: false, is_guest_accessible: true, topic: 'Jabba', ... )
 ```
 
 ## Contributing
