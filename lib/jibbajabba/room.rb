@@ -25,6 +25,7 @@ module HipChat
       end
 
       def method_missing(method, *args, &block)
+        return if method == :to_ary
         to_hash.send(method, *args, &block)
       end
 
@@ -53,8 +54,24 @@ module HipChat
         response = HTTParty.post(url[0..-2], body: params.to_json, headers:
           {'Content-Type' => 'application/json'}.merge(HipChat.credentials)
         )
-        eval(response.to_s)
+        HipChat::Room.new(eval(response.to_s))
       end
+    end
+
+    def initialize(response={})
+      @attrs = response
+    end
+
+    def attributes
+      @attrs
+    end
+
+    def update_attributes(**kwargs)
+      uri = HipChat::Room.url.gsub('?', "/#{@attrs['id']}")
+      response = HTTParty.put(uri, body: kwargs.to_json, headers:
+        {'Content-Type' => 'application/json'}.merge(HipChat.credentials)
+      )
+      eval(response.to_s)
     end
   end
 end
